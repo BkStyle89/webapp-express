@@ -19,5 +19,5 @@
 - vote
 - text
 - created_at
-- updated_at
+- updated_atnp
 
