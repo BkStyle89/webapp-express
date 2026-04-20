@@ -1,13 +1,23 @@
-const express = require('express')
-const app = express()
-const port = 3000
+const express = require('express');
+const app = express();
+const PORT = 3010;
+const postRouter = require('./controller/controller')
+const error500 = require('./middlewares/error500.js')
 
 app.use(express.json());
 
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-})
+// Base route
+app.get('/', (req, res) => {
+  res.send('Server del mio blog');
+});
+
+app.use("/post", postRouter)
+app.use(error500);
+
+
+
+// Start the server
+app.listen(PORT, () => {
+  console.log(`Server running on http://localhost:${PORT}`);
+});
