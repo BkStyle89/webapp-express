@@ -65,5 +65,22 @@ router.post('/movies', (req, res) => {
   });
 });
 
+router.post('/movies/:id/reviews', (req, res) => {
+  const { id } = req.params;
+  const { name, vote, text } = req.body;
+  
+  if (!name || !vote || !text) {
+    return res.status(400).json({ message: 'Missing required fields' });
+  }
+  
+  const query = 'INSERT INTO reviews (movie_id, name, vote, text) VALUES (?, ?, ?, ?)';
+  connection.query(query, [id, name, vote, text], (err, results) => {
+    if (err) {
+      return res.status(500).json({ error: err.message });
+    }
+    res.status(201).json({ id: results.insertId, message: 'Review created successfully' });
+  });
+});
+
 module.exports = router;
 
